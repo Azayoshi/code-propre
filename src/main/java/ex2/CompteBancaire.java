@@ -5,30 +5,11 @@ package ex2;
  */
 public class CompteBancaire {
 
-	/** solde : solde du compte */
 	private double solde;
-	
-	/** decouvert : un découvert est autorisé seulement pour les comptes courants */
 	private double decouvert;
-	
-	/** tauxRemuneration : taux de rémunération dans le cas d'un livret A */
 	private double tauxRemuneration;
-	
-	/** Le type vaut soit CC=Compte courant, ou soit LA=Livret A */
 	private String type;
-	
-	/**
-	 * @param solde
-	 * @param decouvert
-	 * @param type
-	 */
-	public CompteBancaire(String type, double solde, double decouvert) {
-		super();
-		this.type = type;
-		this.solde = solde;
-		this.decouvert = decouvert;
-	}
-	
+
 	
 	/** Ce constructeur est utilisé pour créer un compte de type Livret A
 	 * @param type = LA
@@ -51,22 +32,34 @@ public class CompteBancaire {
 		this.solde += montant;
 	}
 	
-	/** Ajoute un montant au solde
+	/** Débit d'un montant du solde
+	 * Si c'est un CC alors le débit doit être supérieur aux découvert
+	 * Sinon on affiche une erreur
 	 * @param montant
 	 */
 	public void debiterMontant(double montant){
 		if (type.equals("CC")){
 			if (this.solde - montant > decouvert){
 				this.solde = solde - montant;
-			}	
+			}
+			else {
+				System.out.println("Découvert dépassé !!");
+			}
 		}
+
+		/** Si c'est un LA alors le débit doit être supérieur à 0
+		 * Sinon on affiche une erreur
+		 * */
 		else if (type.equals("LA")){
 			if (this.solde - montant > 0){
 				this.solde = solde - montant;
-			}	
+			}else {
+				System.out.println("Débit supérieur au solde du compte !!");
+			}
 		}
 	}
-	
+
+
 	public void appliquerRemuAnnuelle(){
 		if (type.equals("LA")){
 			this.solde = solde + solde*tauxRemuneration/100;
