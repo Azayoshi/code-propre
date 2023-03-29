@@ -5,47 +5,96 @@ package ex2;
  */
 public class CompteBancaire{
 
+	private double solde;
+	private double decouvert;
 
-	/** Ajoute un montant au solde
+
+
+	/** création variable type pour CC=compte courant ou LA=livretA */
+	private String type;
+
+
+	/**
+	 * @param solde
+	 * @param decouvert
+	 */
+	public CompteBancaire(double solde, double decouvert) {
+
+		this("CC",solde,decouvert);
+	}
+
+	/**
+	 *
+	 * @param type
+	 * @param solde
+	 * @param decouvert
+	 */
+	protected CompteBancaire(String type,double solde, double decouvert) {
+
+		this.type = type;
+		this.solde = solde;
+		this.decouvert = decouvert;
+	}
+
+
+	/** Ajoute un montant au solde de départ
 	 * @param montant
 	 */
 	public void ajouterMontant(double montant){
-
 		this.solde += montant;
 	}
-	
-	/** Débit d'un montant du solde
-	 * Si c'est un CC alors le débit doit être supérieur aux découvert
-	 * Sinon on affiche une erreur
+
+	/** Ajoute un montant au solde de départ
 	 * @param montant
 	 */
 	public void debiterMontant(double montant){
-		if (type.equals("CC")){
-			if (this.solde - montant > decouvert){
-				this.solde = solde - montant;
-			}
-			else {
-				System.out.println("Découvert dépassé !!");
-			}
+
+		if (this.solde - montant >= decouvert){
+			this.solde = solde - montant;
 		}
 
-		/** Si c'est un LA alors le débit doit être supérieur à 0
-		 * Sinon on affiche une erreur
-		 * */
-		else if (type.equals("LA")){
-			if (this.solde - montant > 0){
-				this.solde = solde - montant;
-			}else {
-				System.out.println("Débit supérieur au solde du compte !!");
-			}
-		}
 	}
 
-	public void appliquerRemuAnnuelle(){
-		if (type.equals("LA")){
-			this.solde = solde + solde*tauxRemuneration/100;
-		}
+
+
+	/** Getter
+	 * @return solde
+	 */
+	public double getSolde() {
+		return solde;
 	}
-	
+
+	/** Setter
+	 * @param solde
+	 */
+	public void setSolde(double solde) {
+		this.solde = solde;
+	}
+	/** Getter
+	 * @return decouvert
+	 */
+	public double getDecouvert() {
+		return decouvert;
+	}
+	/** Setter
+	 * @param decouvert
+	 */
+	public void setDecouvert(double decouvert) {
+		this.decouvert = decouvert;
+	}
+
+	/** Getter
+	 * @return type
+	 */
+	public String getType() {
+		return type;
+	}
+
+	/** Setter
+	 * @param type
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
 
 }
